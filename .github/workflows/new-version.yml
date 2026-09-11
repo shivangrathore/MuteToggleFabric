@@ -22,7 +22,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: look for a new version
         id: add
@@ -36,7 +36,7 @@ jobs:
 
       - name: open pull request
         if: steps.add.outputs.found == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: mc/${{ steps.add.outputs.mc }}
           title: "Add Minecraft ${{ steps.add.outputs.mc }}"
