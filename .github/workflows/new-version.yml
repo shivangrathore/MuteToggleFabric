@@ -1,0 +1,68 @@
+name: new minecraft version
+
+# Watches for Minecraft releases. When one shows up and Fabric API supports it,
+# this opens a PR adding it as a build target. The build workflow then runs on
+# that PR, so the PR itself tells you whether the mod still compiles:
+#   - green -> merge it, nothing else to do
+#   - red   -> Mojang moved an API; add a //? if block for it in the PR
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Minecraft version to add (blank = latest stable)"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: look for a new version
+        id: add
+        run: |
+          python3 scripts/add_mc_version.py ${{ inputs.version }}
+          if [ -f new-version.json ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            jq -r 'to_entries[] | "\(.key)=\(.value)"' new-version.json >> "$GITHUB_OUTPUT"
+            rm new-version.json
+          fi
+
+      - name: open pull request
+        if: steps.add.outputs.found == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: mc/${{ steps.add.outputs.mc }}
+          title: "Add Minecraft ${{ steps.add.outputs.mc }}"
+          commit-message: "Add Minecraft ${{ steps.add.outputs.mc }} as a build target"
+          delete-branch: true
+          body: |
+            Adds **Minecraft ${{ steps.add.outputs.mc }}** as a build target.
+
+            | | |
+            |---|---|
+            | Fabric API | `${{ steps.add.outputs.api }}` |
+            | Key binding module | `${{ steps.add.outputs.module }}` |
+
+            Opened automatically by `new-version.yml`.
+
+            **If the build check passes**, merge it — the mod compiles against
+            ${{ steps.add.outputs.mc }} unchanged and the release workflow will
+            start shipping a jar for it.
+
+            **If the build check fails**, Minecraft moved an API this mod uses.
+            Wrap the affected lines in a `//? if` block in
+            `src/main/java/io/github/shivangrathore/mutetoggle/MuteToggleClient.java`
+            and push to this branch.
+
+            Worth a look either way: this adds a standalone target. If
+            ${{ steps.add.outputs.mc }} is a patch release that shares its API
+            with an existing target, folding it into that target's
+            `mod.mc_compat` range in `stonecutter.properties.toml` ships one
+            fewer jar.

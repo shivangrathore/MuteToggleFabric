@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "Adds a rebindable key that toggles the master volume between muted and its previous level.",
+  "authors": [
+    "shivangrathore"
+  ],
+  "contact": {
+    "homepage": "https://github.com/shivangrathore/MuteToggleFabric",
+    "sources": "https://github.com/shivangrathore/MuteToggleFabric",
+    "issues": "https://github.com/shivangrathore/MuteToggleFabric/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/${id}/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.shivangrathore.mutetoggle.MuteToggleClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "${minecraft}",
+    "fabric-lifecycle-events-v1": "*",
+    "${keybind_module}": "*"
+  }
+}

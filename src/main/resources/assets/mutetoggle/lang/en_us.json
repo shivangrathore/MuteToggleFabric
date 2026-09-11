@@ -1,0 +1,9 @@
+{
+  "key.mutetoggle.toggle": "Toggle Mute",
+
+  "key.categories.mutetoggle": "Mute Toggle",
+  "key.categories.mutetoggle.main": "Mute Toggle",
+
+  "text.mutetoggle.muted": "Sound muted",
+  "text.mutetoggle.unmuted": "Sound unmuted"
+}

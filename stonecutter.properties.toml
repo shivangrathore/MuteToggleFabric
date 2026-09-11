@@ -1,0 +1,54 @@
+mod.id = "mutetoggle"
+mod.name = "Mute Toggle"
+mod.group = "io.github.shivangrathore.mutetoggle"
+mod.version = "1.0.0"
+
+deps.fabric_loader = "0.19.3"
+loomx.loom_version = "1.17-SNAPSHOT"
+
+# --- Per-version dependencies -------------------------------------------------
+# deps.keybind_module is the Fabric API module holding the key registration
+# helper. It was renamed from fabric-key-binding-api-v1 to
+# fabric-key-mapping-api-v1 in 26.1, when Fabric API dropped the Yarn names.
+
+["1.20.1"]
+mod.mc_compat = ">=1.20 <=1.20.1"
+mod.mc_releases = ["1.20", "1.20.1"]
+deps.fabric_api = "0.92.12+1.20.1"
+deps.keybind_module = "fabric-key-binding-api-v1"
+
+["1.21.1"]
+mod.mc_compat = ">=1.21 <=1.21.1"
+mod.mc_releases = ["1.21", "1.21.1"]
+deps.fabric_api = "0.116.17+1.21.1"
+deps.keybind_module = "fabric-key-binding-api-v1"
+
+["1.21.4"]
+mod.mc_compat = ">=1.21.2 <=1.21.4"
+mod.mc_releases = ["1.21.2", "1.21.3", "1.21.4"]
+deps.fabric_api = "0.119.4+1.21.4"
+deps.keybind_module = "fabric-key-binding-api-v1"
+
+["1.21.8"]
+mod.mc_compat = ">=1.21.5 <=1.21.8"
+mod.mc_releases = ["1.21.5", "1.21.6", "1.21.7", "1.21.8"]
+deps.fabric_api = "0.136.1+1.21.8"
+deps.keybind_module = "fabric-key-binding-api-v1"
+
+["1.21.11"]
+mod.mc_compat = ">=1.21.9 <=1.21.11"
+mod.mc_releases = ["1.21.9", "1.21.10", "1.21.11"]
+deps.fabric_api = "0.141.6+1.21.11"
+deps.keybind_module = "fabric-key-binding-api-v1"
+
+["26.1"]
+mod.mc_compat = "~26.1"
+mod.mc_releases = ["26.1", "26.1.1", "26.1.2"]
+deps.fabric_api = "0.155.3+26.1.2"
+deps.keybind_module = "fabric-key-mapping-api-v1"
+
+["26.2"]
+mod.mc_compat = "26.2"
+mod.mc_releases = ["26.2"]
+deps.fabric_api = "0.160.0+26.2"
+deps.keybind_module = "fabric-key-mapping-api-v1"
